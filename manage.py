@@ -83,6 +83,15 @@ def migrate(env: str) -> int:
     return subprocess.call(['alembic', 'upgrade', 'head'])
 
 
+@db.command(help="Make the database migrations")
+@click.argument('env', envvar='ENV', default='dev', callback=validate_env)
+@click.option('--message', '-m')
+def makemigrations(env: str, message: str) -> int:
+    click.echo(f'Making migrations with message `{message}`...')
+    load_env(env)
+    return subprocess.call(['alembic', 'revision', '--autogenerate', '-m', message])
+
+
 @cli.group(help='Run the code quality tools')
 def check() -> None:
     pass
