@@ -53,6 +53,11 @@ $ python manage.py db create test
 $ python manage.py db migrate test
 $ python manage.py check tests
 ``` 
+
+To make migrations
+```bash
+$ python manage.py db makemigrations -m "first migrations"
+```
 ------------------------
  Thanks to Alex Grover's post
 ------------------------
