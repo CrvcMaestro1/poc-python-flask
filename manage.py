@@ -66,8 +66,8 @@ def db() -> None:
 @db.command(help="Create the database")
 @click.argument('env', envvar='ENV', default='dev', callback=validate_env)
 def create(env: str) -> None:
-    click.echo(f'Creating database for `{env}` environment...')
-    db_name = f'hex_{env}'
+    db_name = os.getenv("DATABASE_APPLICATION")
+    click.echo(f'Creating database `{db_name}` for `{env}` environment...')
     try:
         run_sql([f"CREATE DATABASE {db_name}"])
     except psycopg2.errors.DuplicateDatabase:
@@ -77,7 +77,8 @@ def create(env: str) -> None:
 @db.command(help="Run the database migrations")
 @click.argument('env', envvar='ENV', default='dev', callback=validate_env)
 def migrate(env: str) -> int:
-    click.echo(f'Running migrations for `{env}` environment...')
+    db_name = os.getenv("DATABASE_APPLICATION")
+    click.echo(f'Running migrations for database `{db_name}` and `{env}` environment...')
     load_env(env)
     return subprocess.call(['alembic', 'upgrade', 'head'])
 
