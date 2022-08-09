@@ -1,15 +1,17 @@
 from dataclasses import dataclass
-from datetime import datetime
 
 from dataclasses_json import dataclass_json, LetterCase
+
+from src.domain.category.category import Category
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
-class Post:
+class Product:
     id: int
-    author_name: str
-    title: str
-    body: str
-    created_at: datetime
-    updated_at: datetime
+    name: str
+    stock: float
+    price: float
+    pvp: float
+    has_discount: bool
+    category: Category

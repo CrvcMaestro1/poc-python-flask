@@ -3,7 +3,7 @@ from abc import (
     abstractmethod
 )
 
-from src.tipti.domain.product.entities import Product
+from src.domain.product.product import Product
 
 
 class ProductRepository(metaclass=ABCMeta):
@@ -13,7 +13,7 @@ class ProductRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get(self, id: int) -> Product:
+    def get(self, product_id: int) -> Product:
         pass
 
     @abstractmethod
@@ -25,5 +25,5 @@ class ProductRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def delete(self, id: int) -> None:
+    def delete(self, product_id: int) -> None:
         pass

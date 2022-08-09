@@ -3,8 +3,10 @@ import os
 import inject
 from flask import Flask
 
-from src.adapters.database.postgres import PostgresAdapter
-from src.domain.database_interface import DatabaseInterface
+from src.domain.category.output.category_repository import CategoryRepository
+from src.domain.product.output.product_repository import ProductRepository
+from src.infrastructure.adapters.input.repositories.category_repository_impl import CategoryRepositoryImpl
+from src.infrastructure.adapters.input.repositories.product_repository_impl import ProductRepositoryImpl
 
 
 def configure_application(application: Flask) -> None:
@@ -15,7 +17,8 @@ def configure_application(application: Flask) -> None:
 
 def configure_inject(application: Flask) -> None:
     def config(binder: inject.Binder) -> None:
-        binder.bind(DatabaseInterface, PostgresAdapter(application.config['DATABASE_URI']))
+        binder.bind(CategoryRepository, CategoryRepositoryImpl(application.config['DATABASE_URI']))
+        binder.bind(ProductRepository, ProductRepositoryImpl(application.config['DATABASE_URI']))
 
     inject.configure(config)
 

@@ -3,18 +3,17 @@ from abc import (
     abstractmethod
 )
 
-from src.tipti.domain.category.entities import Category
+from src.domain.category.category import Category
 
 
-class CategoryManager:
-    __metaclass__ = ABCMeta
+class CategoryRepository(metaclass=ABCMeta):
 
     @abstractmethod
     def list(self) -> [Category]:
         pass
 
     @abstractmethod
-    def get(self, id: int) -> Category:
+    def get(self, category_id: int) -> Category:
         pass
 
     @abstractmethod
@@ -26,5 +25,5 @@ class CategoryManager:
         pass
 
     @abstractmethod
-    def delete(self, id: int) -> None:
+    def delete(self, category_id: int) -> None:
         pass

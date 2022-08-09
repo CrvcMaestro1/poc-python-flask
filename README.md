@@ -41,7 +41,7 @@ $ source venv/bin/activate
 $ chmod +x ./setup.sh
 $ ./setup.sh
 $ docker-compose -f docker/docker-compose.yml exec web bash
-$ python manage.py db create # already executed in docker-compose file
+$ python manage.py db create # already executed input docker-compose file
 $ python manage.py db migrate
 $ python manage.py server # run the server (run flask without docker-compose)
 ```
