@@ -60,6 +60,5 @@ $ python manage.py db makemigrations -m "first migrations"
 ```
 
 Docs in Postman 
-```bash
+
 [Clic here](https://documenter.getpostman.com/view/8486968/VUjQkjPf)
-```
