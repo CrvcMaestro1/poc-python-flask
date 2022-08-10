@@ -3,6 +3,7 @@ from sqlalchemy import (
 )
 
 from src.domain.category.category import Category
+from src.domain.category.exceptions import CategoryNotFound
 from src.domain.category.output.category_repository import CategoryRepository
 from src.infrastructure.entities.category_entity import CategoryEntity
 
@@ -23,10 +24,12 @@ class CategoryRepositoryImpl(CategoryRepository):
         query = CategoryEntity.select().where(CategoryEntity.c.id == category_id)
         cursor = self.__connection.execute(query)
         row = cursor.fetchone()
+        if not row:
+            raise CategoryNotFound('Category does not found')
         return Category(**row)
 
     def create(self, category: Category) -> Category:
-        insert = CategoryEntity.insert().values(**category.to_json()).returning(literal_column('*'))
+        insert = CategoryEntity.insert().values(**category.to_create()).returning(literal_column('*'))
         cursor = self.__connection.execute(insert)
         result = cursor.fetchone()
         return Category(**result)
@@ -35,7 +38,7 @@ class CategoryRepositoryImpl(CategoryRepository):
         update = (
             CategoryEntity.update().
             where(CategoryEntity.c.id == category.id).
-            values(**category.to_json()).
+            values(**category.to_update()).
             returning(literal_column('*'))
         )
         cursor = self.__connection.execute(update)
