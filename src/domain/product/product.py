@@ -50,3 +50,13 @@ class Product:
             "has_discount": self.has_discount,
             "category_id": self.category.id
         }
+
+    def to_json_pure(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "stock": self.stock,
+            "price": self.price,
+            "pvp": self.pvp,
+            "has_discount": self.has_discount
+        }

@@ -40,22 +40,19 @@ class ProductRepositoryImpl(ProductRepository):
     def create(self, product: Product) -> Product:
         insert = ProductEntity.insert() \
             .values(**product.to_create()) \
-            .returning(ProductEntity, CategoryEntity.c.name.label('category_name'))
+            .returning(literal_column('*'))
         cursor = self.__connection.execute(insert)
         result = cursor.fetchone()
-        return Product(**result)
+        return Product.from_dict_to_dataclass(result._mapping)
 
     def update(self, product: Product) -> Product:
-        pass
-        # update = (
-        #     ProductEntity.update()
-        #         .where(ProductEntity.c.id == product.id)
-        #         .values(**product.to_json())
-        #         .returning(literal_column('*'))
-        # )
-        # cursor = self.__connection.execute(update)
-        # result = cursor.fetchone()
-        # return Product(**result)
+        update = ProductEntity.update() \
+            .where(ProductEntity.c.id == product.id) \
+            .values(**product.to_update()) \
+            .returning(literal_column('*'))
+        cursor = self.__connection.execute(update)
+        result = cursor.fetchone()
+        return Product.from_dict_to_dataclass(result._mapping)
 
     def delete(self, product_id: int):
         pass

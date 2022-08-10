@@ -22,26 +22,25 @@ def product_blueprint(
 
     @blueprint.route('/products/<int:product_id>')
     @error_handler
-    def category_get(product_id: int) -> Response:
+    def product_get(product_id: int) -> Response:
         product = product_service.get(product_id)
         return jsonify(product.to_dict())
 
     @blueprint.route('/products', methods=['POST'])
     @error_handler
-    def category_create() -> Response:
+    def product_create() -> Response:
         data: dict | None = request.get_json()
         product_object = Product.from_dict_to_dataclass(data)
         product = product_service.create(product_object)
-        return jsonify(product.to_dict())
+        return jsonify(product.to_json_pure())
 
-    #
-    # @blueprint.route('/categories/<int:category_id>', methods=['PUT'])
-    # @error_handler
-    # def category_update(category_id: int) -> Response:
-    #     data: dict | None = request.get_json()
-    #     data["id"] = category_id
-    #     category_object = Category.from_dict_to_dataclass(data)
-    #     category = category_service.update(category_object)
-    #     return jsonify(category.to_dict())
+    @blueprint.route('/products/<int:product_id>', methods=['PUT'])
+    @error_handler
+    def product_update(product_id: int) -> Response:
+        data: dict | None = request.get_json()
+        data["id"] = product_id
+        product_object = Product.from_dict_to_dataclass(data)
+        product = product_service.update(product_object)
+        return jsonify(product.to_json_pure())
 
     return blueprint
