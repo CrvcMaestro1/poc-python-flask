@@ -33,10 +33,10 @@ class CategoryRepositoryImpl(CategoryRepository):
 
     def update(self, category: Category) -> Category:
         update = (
-            CategoryEntity.update()
-                .where(CategoryEntity.c.id == category.id)
-                .values(**category.to_json())
-                .returning(literal_column('*'))
+            CategoryEntity.update().
+            where(CategoryEntity.c.id == category.id).
+            values(**category.to_json()).
+            returning(literal_column('*'))
         )
         cursor = self.__connection.execute(update)
         result = cursor.fetchone()
