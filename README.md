@@ -58,7 +58,8 @@ To make migrations
 ```bash
 $ python manage.py db makemigrations -m "first migrations"
 ```
-------------------------
- Thanks to Alex Grover's post
-------------------------
-https://alexgrover.me/posts/python-hexagonal-architecture
+
+Docs in Postman 
+```bash
+[Clic here](https://documenter.getpostman.com/view/8486968/VUjQkjPf)
+```
