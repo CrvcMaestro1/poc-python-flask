@@ -6,7 +6,9 @@ from flask import Flask
 from src.domain.category.category_service_impl import CategoryServiceImpl
 from src.domain.category.input.category_service import CategoryService
 from src.domain.category.output.category_repository import CategoryRepository
+from src.domain.product.input.product_service import ProductService
 from src.domain.product.output.product_repository import ProductRepository
+from src.domain.product.product_service_impl import ProductServiceImpl
 from src.infrastructure.adapters.input.repositories.category_repository_impl import CategoryRepositoryImpl
 from src.infrastructure.adapters.input.repositories.product_repository_impl import ProductRepositoryImpl
 
@@ -22,6 +24,7 @@ def configure_inject(application: Flask) -> None:
         binder.bind(CategoryRepository, CategoryRepositoryImpl(application.config['DATABASE_URI']))
         binder.bind(ProductRepository, ProductRepositoryImpl(application.config['DATABASE_URI']))
         binder.bind(CategoryService, CategoryServiceImpl(CategoryRepositoryImpl(application.config['DATABASE_URI'])))
+        binder.bind(ProductService, ProductServiceImpl(ProductRepositoryImpl(application.config['DATABASE_URI'])))
 
     inject.configure(config)
 
